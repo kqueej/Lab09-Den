@@ -191,16 +191,14 @@ ref нужен для изменения самой переменной-ссы�
 //         }
 
 //         Console.WriteLine();
-//         Console.WriteLine(
-//             $"Array: {string.Join(", ", numbers)}"
-//         );
+//         Console.WriteLine($"Array: {string.Join(", ", numbers)}");
 //     }
 
-//     static int ReadPositiveInt(string message)
+//     static int ReadPositiveInt(string p)
 //     {
 //         while (true)
 //         {
-//             Console.Write(message);
+//             Console.Write(p);
 
 //             string input = Console.ReadLine()!;
 
@@ -214,13 +212,13 @@ ref нужен для изменения самой переменной-ссы�
 //             Console.WriteLine("Error: Enter number > 0 and integer");
 //         }
 //     }
-//     static int ReadInt(string message)
+//     static int ReadInt(string p)
 //     {
 //         while (true)
 //         {
-//             Console.Write(message);
+//             Console.Write(p);
 
-//             string? input = Console.ReadLine();
+//             string input = Console.ReadLine()!;
 
 //             if (int.TryParse(input, out int value))
 //             {
@@ -230,3 +228,115 @@ ref нужен для изменения самой переменной-ссы�
 //         }
 //     }
 // }
+
+// Final task 
+class Program
+{
+    static void Main()
+    {
+        int count = ReadPositiveInt("How many results? ");
+
+        int[] results = new int[count];
+
+        for (int i = 0; i < results.Length; i++)
+        {
+            results[i] = ReadInt($"Result {i + 1}: ");
+        }
+
+        int threshold = ReadInt("Threshold: ");
+        Console.WriteLine();
+        Console.WriteLine("Results:");
+        for (int i = 0; i < results.Length; i++)
+        {
+            Console.WriteLine($"{i + 1}: {results[i]}");
+        }
+
+        CalculateStatistics(
+            results,
+            threshold,
+            out double average,
+            out int best,
+            out int worst,
+            out int CountAboveThreshold
+        );
+
+        Console.WriteLine();
+
+        Console.WriteLine($"Average: {average:F2}");
+        Console.WriteLine($"Best result: {best}");
+        Console.WriteLine($"Worst result: {worst}");
+        Console.WriteLine(
+            $"Results greater than or equal to {threshold}: {CountAboveThreshold}"
+        );
+    }
+    static int ReadPositiveInt(string p)
+    {
+        while (true)
+        {
+            Console.Write(p);
+
+            string input = Console.ReadLine()!;
+
+            if (int.TryParse(input, out int value))
+            {
+                if (value > 0)
+                {
+                    return value;
+                }
+            }
+            Console.WriteLine(
+                "Error: Enter number > 0 and integer"
+            );
+        }
+    }
+    static int ReadInt(string p)
+    {
+        while (true)
+        {
+            Console.Write(p);
+
+            string input = Console.ReadLine()!;
+
+            if (int.TryParse(input, out int value))
+            {
+                return value;
+            }
+            Console.WriteLine(
+                "Error: enter an integer"
+            );
+        }
+    }
+    static void CalculateStatistics(
+        int[] results,
+        int threshold,
+        out double average,
+        out int best,
+        out int worst,
+        out int CountAboveThreshold)
+    {
+        int sum = 0;
+
+        best = results[0];
+        worst = results[0];
+        CountAboveThreshold = 0;
+
+        foreach (int result in results)
+        {
+            sum += result;
+
+            if (result > best)
+            {
+                best = result;
+            }
+            if (result < worst)
+            {
+                worst = result;
+            }
+            if (result >= threshold)
+            {
+                CountAboveThreshold++;
+            }
+        }
+        average = (double)sum / results.Length;
+    }
+}
