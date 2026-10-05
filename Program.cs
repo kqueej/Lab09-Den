@@ -136,10 +136,10 @@ ref нужен для изменения самой переменной-ссы�
 //             }
 //         }
 
-//         Console.WriteLine($"Сумма: {sum}");
-//         Console.WriteLine($"Среднее: {average:F2}");
-//         Console.WriteLine($"Максимум: {max}");
-//         Console.WriteLine($"Минимум: {min}");
+//         Console.WriteLine($"Sum: {sum}");
+//         Console.WriteLine($"Average: {average:F2}");
+//         Console.WriteLine($"Max: {max}");
+//         Console.WriteLine($"Min: {min}");
 //     }
 // }
 
@@ -230,113 +230,203 @@ ref нужен для изменения самой переменной-ссы�
 // }
 
 // Final task 
+// class Program
+// {
+//     static void Main()
+//     {
+//         int count = ReadPositiveInt("How many results? ");
+
+//         int[] results = new int[count];
+
+//         for (int i = 0; i < results.Length; i++)
+//         {
+//             results[i] = ReadInt($"Result {i + 1}: ");
+//         }
+
+//         int threshold = ReadInt("Threshold: ");
+//         Console.WriteLine();
+//         Console.WriteLine("Results:");
+//         for (int i = 0; i < results.Length; i++)
+//         {
+//             Console.WriteLine($"{i + 1}: {results[i]}");
+//         }
+
+//         CalculateStatistics(
+//             results,
+//             threshold,
+//             out double average,
+//             out int best,
+//             out int worst,
+//             out int CountAboveThreshold
+//         );
+
+//         Console.WriteLine();
+
+//         Console.WriteLine($"Average: {average:F2}");
+//         Console.WriteLine($"Best result: {best}");
+//         Console.WriteLine($"Worst result: {worst}");
+//         Console.WriteLine(
+//             $"Results greater than or equal to {threshold}: {CountAboveThreshold}"
+//         );
+//     }
+//     static int ReadPositiveInt(string p)
+//     {
+//         while (true)
+//         {
+//             Console.Write(p);
+
+//             string input = Console.ReadLine()!;
+
+//             if (int.TryParse(input, out int value))
+//             {
+//                 if (value > 0)
+//                 {
+//                     return value;
+//                 }
+//             }
+//             Console.WriteLine(
+//                 "Error: Enter number > 0 and integer"
+//             );
+//         }
+//     }
+//     static int ReadInt(string p)
+//     {
+//         while (true)
+//         {
+//             Console.Write(p);
+
+//             string input = Console.ReadLine()!;
+
+//             if (int.TryParse(input, out int value))
+//             {
+//                 return value;
+//             }
+//             Console.WriteLine(
+//                 "Error: enter an integer"
+//             );
+//         }
+//     }
+//     static void CalculateStatistics(
+//         int[] results,
+//         int threshold,
+//         out double average,
+//         out int best,
+//         out int worst,
+//         out int CountAboveThreshold)
+//     {
+//         int sum = 0;
+
+//         best = results[0];
+//         worst = results[0];
+//         CountAboveThreshold = 0;
+
+//         foreach (int result in results)
+//         {
+//             sum += result;
+
+//             if (result > best)
+//             {
+//                 best = result;
+//             }
+//             if (result < worst)
+//             {
+//                 worst = result;
+//             }
+//             if (result >= threshold)
+//             {
+//                 CountAboveThreshold++;
+//             }
+//         }
+//         average = (double)sum / results.Length;
+//     }
+// }
+
+// Dop 1
+// class Program
+// {
+//     static void Main()
+//     {
+//         int[] numbers = [1, 2, 3, 4, 5];
+//         Console.WriteLine($"Before: {string.Join(", ", numbers)}");
+//         ReverseArray(numbers);
+//         Console.WriteLine($"After: {string.Join(", ", numbers)}");
+//     }
+//     static void ReverseArray(int[] array)
+//     {
+//         int left = 0;
+//         int right = array.Length - 1;
+
+//         while (left < right)
+//         {
+//             int t = array[left];
+
+//             array[left] = array[right];
+//             array[right] = t;
+//             left++;
+//             right--;
+//         }
+//     }
+// }
+
+// Dop 2
+// class Program
+// {
+//     static void Main()
+//     {
+//         int[] numbers = [5, 8, 3, 8, 10];
+//         Console.WriteLine(FindIndex(numbers, 8));
+//         Console.WriteLine(FindIndex(numbers, 10));
+//         Console.WriteLine(FindIndex(numbers, 100));
+//     }   
+//     static int FindIndex(int[] array, int target)
+//     {
+//         for (int i = 0; i < array.Length; i++)
+//         {
+//             if (array[i] == target)
+//             {
+//                 return i;
+//             }
+//         }
+//         return -1;
+//     }
+// }
+
+// Dop 3
 class Program
 {
     static void Main()
     {
-        int count = ReadPositiveInt("How many results? ");
-
-        int[] results = new int[count];
-
-        for (int i = 0; i < results.Length; i++)
-        {
-            results[i] = ReadInt($"Result {i + 1}: ");
-        }
-
-        int threshold = ReadInt("Threshold: ");
-        Console.WriteLine();
-        Console.WriteLine("Results:");
-        for (int i = 0; i < results.Length; i++)
-        {
-            Console.WriteLine($"{i + 1}: {results[i]}");
-        }
-
-        CalculateStatistics(
-            results,
-            threshold,
-            out double average,
-            out int best,
-            out int worst,
-            out int CountAboveThreshold
-        );
-
-        Console.WriteLine();
-
-        Console.WriteLine($"Average: {average:F2}");
-        Console.WriteLine($"Best result: {best}");
-        Console.WriteLine($"Worst result: {worst}");
-        Console.WriteLine(
-            $"Results greater than or equal to {threshold}: {CountAboveThreshold}"
-        );
+        int[] numbers = [5, 9, 9, 3];
+        FindSecondLargest(numbers, out int second);
+        Console.WriteLine($"Second largest: {second}");
     }
-    static int ReadPositiveInt(string p)
+    static bool FindSecondLargest(int[] array, out int second)
     {
-        while (true)
+        second = 0;
+
+        if (array.Length < 2)
         {
-            Console.Write(p);
-
-            string input = Console.ReadLine()!;
-
-            if (int.TryParse(input, out int value))
-            {
-                if (value > 0)
-                {
-                    return value;
-                }
-            }
-            Console.WriteLine(
-                "Error: Enter number > 0 and integer"
-            );
+            return false;
         }
-    }
-    static int ReadInt(string p)
-    {
-        while (true)
+        int max = array[0];
+        bool hasSecond = false;
+
+        for (int i = 1; i < array.Length; i++)
         {
-            Console.Write(p);
+            int value = array[i];
 
-            string input = Console.ReadLine()!;
-
-            if (int.TryParse(input, out int value))
+            if (value > max)
             {
-                return value;
+                second = max;
+                max = value;
+                hasSecond = true;
             }
-            Console.WriteLine(
-                "Error: enter an integer"
-            );
-        }
-    }
-    static void CalculateStatistics(
-        int[] results,
-        int threshold,
-        out double average,
-        out int best,
-        out int worst,
-        out int CountAboveThreshold)
-    {
-        int sum = 0;
-
-        best = results[0];
-        worst = results[0];
-        CountAboveThreshold = 0;
-
-        foreach (int result in results)
-        {
-            sum += result;
-
-            if (result > best)
+            else if (value < max && (hasSecond == false || value > second))
             {
-                best = result;
-            }
-            if (result < worst)
-            {
-                worst = result;
-            }
-            if (result >= threshold)
-            {
-                CountAboveThreshold++;
+                second = value;
+                hasSecond = true;
             }
         }
-        average = (double)sum / results.Length;
+        return hasSecond;
     }
 }
